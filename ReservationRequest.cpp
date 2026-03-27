@@ -1,7 +1,4 @@
-#include <iostream>
 #include "ReservationRequest.hpp"
-using namespace std;
-//using namespace ReservationRequest;
 
 ReservationRequest::ReservationRequest(string course_name,
                                        string weekday,
@@ -13,4 +10,22 @@ ReservationRequest::ReservationRequest(string course_name,
     this->start_hour = start_hour;
     this->end_hour = end_hour;
     this->student_count = student_count;
+}
+ReservationRequest::~ReservationRequest() {
+    // sem nada para deletar
+}
+int ReservationRequest::getStartHour() {
+    return this->start_hour;
+}
+int ReservationRequest::getEndHour() {
+    return this->end_hour;
+}
+std::string ReservationRequest::getCourseName() {
+    return this->course_name;
+}
+std::string ReservationRequest::getWeekday() {
+    return this->weekday;
+}
+int ReservationRequest::getStudentCount() {
+    return this->student_count;
 }
