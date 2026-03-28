@@ -1,6 +1,6 @@
+#pragma once
 #include "ReservationRequest.hpp"
 #include "utilities.hpp"
-#include <iostream>
 
 class ReservationSystem {
 private:

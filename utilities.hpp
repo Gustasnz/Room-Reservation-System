@@ -1,8 +1,4 @@
-//uma lista encadeada da seguinte forma:
-//sala é uma classe que possui um ponteiro, tal ponteiro aponta para uma lista de ponteiros(cada ponteiro é um dia da semana)
-//cada um dos dias da semana aponta para uma das reservas feitas para aquele dia
-//uma reserva é uma classe com atributos diversos e um ponteiro que aponta para a próxima reserva que foi feita
-//reserva pode ter um metodo que recebe um horario e verifica se esse horario estaria entre os horarios da reserva
+#pragma once
 #include <string>
 
 using namespace std;
@@ -33,6 +29,16 @@ public:
     Sala() {
         for (int i = 0; i < 5; i++) {
             dias[i] = nullptr;
+        }
+    }
+    ~Sala() {
+        for (int i = 0; i < 5; i++) {
+            Reserva* curr = dias[i];
+            while (curr != nullptr) {
+                Reserva* next = curr->proxima;
+                delete curr;
+                curr = next;
+            }
         }
     }
 
