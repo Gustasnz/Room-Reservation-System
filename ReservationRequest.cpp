@@ -29,3 +29,4 @@ std::string ReservationRequest::getWeekday() {
 int ReservationRequest::getStudentCount() {
     return this->student_count;
 }
+//aqui todos os métodos servem apenas para obter os atributos privados
