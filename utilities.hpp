@@ -33,10 +33,10 @@ public:
     }
     ~Sala() {
         for (int i = 0; i < 5; i++) {
-            Reserva* curr = dias[i];
+            Reserva* reserv = dias[i];
             while (curr != nullptr) {
-                Reserva* next = curr->proxima;
-                delete curr;
+                Reserva* next = reserv->proxima;
+                delete reserv;
                 curr = next;
             }
         }
@@ -63,18 +63,7 @@ public:
             for (int i = 0; i < j; i++){
                 Reserva* atual = dias[dia];
                 Reserva* anterior = nullptr;
-                bool swapped = false; /*
-                for (int k=0;k<j-i;k++){
-                    if(reserv->inicio>(reserv->proxima)->inicio){
-                        Reserva* temp = reserv->proxima->proxima;
-                        reserv->proxima->proxima = reserv;
-                        reserv->proxima=temp;
-                        swapped=true;
-                    }
-                } if (!swapped) break;
-            } return true;
-        }
-    }*/
+                bool swapped = fals;
                 while (atual != nullptr && atual->proxima != nullptr) {
                     if (atual->inicio > atual->proxima->inicio) {
                         Reserva* temp = atual->proxima;
@@ -111,7 +100,6 @@ public:
                     else {
                         anterior->proxima = reserv->proxima;
                     }
-                    //remover reserv
                     delete reserv;
                     return true;
                 }
