@@ -49,18 +49,51 @@ public:
             return true;
         }
         else {
-            int j = 0; // se j = 0 ok, se j = 1 conflito de horários
+            int j = 0;
             Reserva* reserv=dias[dia];
             while(reserv != nullptr){
                 if (reserv->contem_horario(inicio,fim)) {
                     return false;
                 } reserv=reserv->proxima;
+                j++;
             }
             Reserva* nova = new Reserva(course_name, inicio, fim);
             nova->proxima = dias[dia];
             dias[dia] = nova;
-            return true;
-        }    
+            for (int i = 0; i < j; i++){
+                Reserva* atual = dias[dia];
+                Reserva* anterior = nullptr;
+                bool swapped = false; /*
+                for (int k=0;k<j-i;k++){
+                    if(reserv->inicio>(reserv->proxima)->inicio){
+                        Reserva* temp = reserv->proxima->proxima;
+                        reserv->proxima->proxima = reserv;
+                        reserv->proxima=temp;
+                        swapped=true;
+                    }
+                } if (!swapped) break;
+            } return true;
+        }
+    }*/
+                while (atual != nullptr && atual->proxima != nullptr) {
+                    if (atual->inicio > atual->proxima->inicio) {
+                        Reserva* temp = atual->proxima;
+                        atual->proxima = temp->proxima;
+                        temp->proxima = atual;
+                        if (anterior == nullptr) {
+                            dias[dia] = temp;
+                        } else {
+                            anterior->proxima = temp;
+                        }
+                        anterior = temp;
+                        swapped = true;
+                    } else {
+                        anterior = atual;
+                        atual = atual->proxima;
+                    }
+                } return true;
+            }
+        } return true;
     }
     
     bool cancelar_reserva(dias_semana dia, string course_name) {

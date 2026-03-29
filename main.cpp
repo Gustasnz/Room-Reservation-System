@@ -1,25 +1,32 @@
 #include <iostream>
-#include <string>
 #include "ReservationSystem.hpp"
 
 int main() {
-    int capacities[3] = {30, 50, 80};
-    ReservationSystem sys(3, capacities);
 
-    // Test reservations
-    sys.reserve(ReservationRequest("Matematica",  "segunda", 7,  9,  25));
-    sys.reserve(ReservationRequest("Fisica",      "segunda", 9,  11, 45));
-    sys.reserve(ReservationRequest("Quimica",     "terca",   7,  9,  80));
-    sys.reserve(ReservationRequest("Historia",    "segunda", 7,  9,  60)); // conflicts room1, should go to room3
+    int room_count = 2;
+    int capacities[2] = {30, 50};
 
-    bool ok = sys.reserve(ReservationRequest("Bloqueada", "segunda", 7, 9, 90)); // no room big enough free
-    cout << "Reserva impossivel (esperado false): " << (ok ? "true" : "false") << "\n\n";
+    ReservationSystem system(room_count, capacities);
+    ReservationRequest ed("Data Structures", "quarta", 8, 11, 35);
+    ReservationRequest vect("Vectorial Calculus", "segunda", 13, 15, 20);
+    ReservationRequest aln("Numerical Linear Algebra", "quarta", 12, 16, 40);
+    ReservationRequest prob("Probability Theory", "quarta", 7, 10, 40); // deve dar conflito
 
-    sys.printSchedule();
+    cout << "Adicionando reservas..." << endl; // retorna 1 se conseguir reserva e 0 se não
+    cout << "Reserva 1: " << system.reserve(ed) << endl; // esperado: 1
+    cout << "Reserva 2: " << system.reserve(vect) << endl; // esperado: 1
+    cout << "Reserva 3: " << system.reserve(aln) << endl; // esperado: 1
+    cout << "Reserva 4: " << system.reserve(prob) << endl; // esperado: 0
+    
+    cout << "\n=== Schedule Inicial ===\n";
+    system.printSchedule();
 
-    cout << "--- Cancelando Fisica ---\n\n";
-    sys.cancel("Fisica");
-    sys.printSchedule();
-
+    cout << "\nCancelando Data Structures...\n";
+    cout << "Cancelamento 1: " << system.cancel("Data Structures") << endl; // esperado: 1
+    cout << "Reserva 5: " << system.reserve(prob) << endl; // esperado: 1
+    
+    cout << "\n=== Schedule Após Cancelamento ===\n";
+    system.printSchedule();
+    
     return 0;
 }
