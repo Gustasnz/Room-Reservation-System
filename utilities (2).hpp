@@ -58,20 +58,19 @@ public:
             dias[dia]=nova;
             return true;
             }
-            else{
-                while(fim>reserv->inicio && reserv!=nullptr){ //como a lista está ordenada não precisamos verificar ela toda
-                    if (reserv->contem_horario(inicio,fim)) {
-                        return false;
-                    } anterior=reserv;
-                    reserv=reserv->proxima;
-                }
+            while(reserv!=nullptr && fim>reserv->inicio){ //como a lista está ordenada não precisamos verificar ela toda
+                if (reserv->contem_horario(inicio,fim)) {
+                    return false;
+                } 
+                anterior=reserv;
+                reserv=reserv->proxima;}
             
             Reserva* nova = new Reserva(course_name, inicio, fim);
             nova->proxima = reserv;
             anterior->proxima= nova;
             } //aqui estamos acrescentando um elemento na sua devida posição, com isso evitamos realizar um sort posteriormente
             
-        } return true; //retornamos booleanos nesses métodos com base em sucesso ou falha na reserva
+         return true; //retornamos booleanos nesses métodos com base em sucesso ou falha na reserva
     }
     
     bool cancelar_reserva(dias_semana dia, string course_name) { //cancela uma reserva e retorna um booleano em caso de sucesso ou falha
