@@ -51,38 +51,26 @@ public:
         else {
             int j = 0;
             Reserva* reserv=dias[dia];
-            while(fim>reserv->inicio){ //como a lista está ordenada não precisamos verificar ela toda
+            Reserva* anterior=nullptr;
+            if (fim<=reserv->inicio){
+                Reserva* nova = new Reserva(course_name, inicio, fim);
+            nova->proxima = reserv;
+            dias[dia]=nova;
+            return true;
+            }
+            while(reserv!=nullptr && fim>reserv->inicio){ //como a lista está ordenada não precisamos verificar ela toda
                 if (reserv->contem_horario(inicio,fim)) {
                     return false;
-                } reserv=reserv->proxima;
-                j++;
-            }
+                } 
+                anterior=reserv;
+                reserv=reserv->proxima;}
+            
             Reserva* nova = new Reserva(course_name, inicio, fim);
-            nova->proxima = dias[dia];
-            dias[dia] = nova;
-            for (int i = 0; i < j; i++){ //aqui ordenamos a lista usando bubble sort
-                Reserva* atual = dias[dia];
-                Reserva* anterior = nullptr;
-                bool swapped = false;
-                while (atual != nullptr && atual->proxima != nullptr) {
-                    if (atual->inicio > atual->proxima->inicio) {
-                        Reserva* temp = atual->proxima; //aqui criamos temp para guardar atual->proxima para realizar a troca
-                        atual->proxima = temp->proxima;
-                        temp->proxima = atual;
-                        if (anterior == nullptr) {
-                            dias[dia] = temp;
-                        } else {
-                            anterior->proxima = temp;
-                        }
-                        anterior = temp;
-                        swapped = true;
-                    } else {
-                        anterior = atual;
-                        atual = atual->proxima;
-                    }
-                } return true;
-            }
-        } return true; //retornamos booleanos nesses métodos com base em sucesso ou falha na reserva
+            nova->proxima = reserv;
+            anterior->proxima= nova;
+            } //aqui estamos acrescentando um elemento na sua devida posição, com isso evitamos realizar um sort posteriormente
+            
+         return true; //retornamos booleanos nesses métodos com base em sucesso ou falha na reserva
     }
     
     bool cancelar_reserva(dias_semana dia, string course_name) { //cancela uma reserva e retorna um booleano em caso de sucesso ou falha
