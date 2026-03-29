@@ -15,10 +15,7 @@ Cada reserva contém:
 
 Os dados foram organizados de modo que o gerenciamento dos horários (parte central do código) fosse feita por listas encadeadas seguinho a seguinte hierarquia de controle:
 
-ReservationSystem
- └── Sala[]
-      └── dias[5]
-           └── Lista encadeada de Reserva
+ReservationSystem -> Sala -> Dias -> Lista encadeada de reservas
 
 ---
 
